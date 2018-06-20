@@ -21,9 +21,6 @@ math.prog <- courseProgressionSGP(SBAC_Data_LONG[CONTENT_AREA %in% "MATH"], lag.
 ####     Mathematics
 ####
 
-###  Find out which Math related content areas are present in the Fall data
-names(math.prog$BACKWARD[['2017']])
-
 sum(math.prog$BACKWARD[['2017']]$MATH.04[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.03"]$COUNT)   #  200767
 sum(math.prog$BACKWARD[['2017']]$MATH.05[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.04"]$COUNT)   #  196247
 sum(math.prog$BACKWARD[['2017']]$MATH.06[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.05"]$COUNT)   #  191210
@@ -35,7 +32,6 @@ sum(math.prog$BACKWARD[['2017']]$MATH.10[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MA
 sum(math.prog$BACKWARD[['2017']]$MATH.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.10"]$COUNT)   #  6744
 sum(math.prog$BACKWARD[['2017']]$MATH.11[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.11"]$COUNT)   #  449241 (repeaters) !!!  ???
 sum(math.prog$BACKWARD[['2017']]$MATH.12[CONTENT_AREA_by_GRADE_PRIOR_YEAR.1=="MATH.11"]$COUNT)   #  2656
-
 
 
 ####
