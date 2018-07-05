@@ -16,8 +16,4 @@ ELA_2018.config <- list(
   ELA.2018_3 = list(
     sgp.content.areas=rep('ELA', 2),
 	sgp.panel.years=c('2017', '2018'),
-    sgp.grade.sequences=list(c('10', '11'))),
-  ELA.2018_4 = list(
-    sgp.content.areas=rep('ELA', 3),
-	sgp.panel.years=c('2016', '2017', '2018'),
-    sgp.grade.sequences=list(c('10', '11', '12'))))
+    sgp.grade.sequences=list(c('10', '11'))))
