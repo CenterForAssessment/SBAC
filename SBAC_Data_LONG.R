@@ -18,14 +18,10 @@ strhead <- function (s, n)
 
 
 ###
-###		Load 2017 Raw Data
+###		Load 2015, 2016, and 2018 Raw Data
 ###
 
 #setwd("~/Dropbox (SGP)/SGP/SBAC/")
-
-SBAC_Data_LONG_2015 <- fread("Data/Base_Files/Longit14-15.csv", header = TRUE, colClasses=rep("character", 16))
-SBAC_Data_LONG_2016 <- fread("Data/Base_Files/Longit15-16.csv", header = TRUE, colClasses=rep("character", 16))
-SBAC_Data_LONG_2017 <- fread("Data/Base_Files/Longit16-17.csv", header = TRUE, colClasses=rep("character", 16))
 
 SBAC_Data_LONG <- rbindlist(list(
   fread("Data/Base_Files/Longit14-15.csv", header = TRUE, colClasses=rep("character", 16))[,YEAR := "2015"],
@@ -33,9 +29,9 @@ SBAC_Data_LONG <- rbindlist(list(
   fread("Data/Base_Files/Longit16-17.csv", header = TRUE, colClasses=rep("character", 16))[,YEAR := "2017"]
 ))
 
-SBAC_Data_LONG[, STATE := strhead(SBAC_Data_LONG$StudentIdentifier, 2)]
+SBAC_Data_LONG[, SBAC_STATE := strhead(SBAC_Data_LONG$StudentIdentifier, 2)]
 
-# STATE by YEAR:    SBAC_Data_LONG[, list(N=.N), keyby=c("STATE", "YEAR")]
+# STATE by YEAR:    SBAC_Data_LONG[, list(N=.N), keyby=c("SBAC_STATE", "YEAR")]
 # GRADE by CONTENT_AREA:     SBAC_Data_LONG[, list(N=.N), keyby=c("GradeLevelWhenAssessed", "Subject")]
 
 setnames(SBAC_Data_LONG, c("StudentIdentifier", "GradeLevelWhenAssessed", "Subject", "ScaleScore"), c("ID", "GRADE", "CONTENT_AREA", "SCALE_SCORE"))
@@ -78,6 +74,16 @@ SBAC_Data_LONG[LEPStatus %in% c("Yes", "Ye"), LEPStatus := "Yes"]
 SBAC_Data_LONG[Section504Status %in% c("NESNo"), Section504Status := "No"]
 SBAC_Data_LONG[Section504Status %in% c("Unk"), Section504Status := "Unknown/Cannot Provide"]
 
+# Invalidate duplicates
+
+setkey(SBAC_Data_LONG, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID, SCALE_SCORE)
+setkey(SBAC_Data_LONG, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
+SBAC_Data_LONG[which(duplicated(SBAC_Data_LONG, by=key(SBAC_Data_LONG)))-1, VALID_CASE:="INVALID_CASE"]
+
+
+# Add ACHIEVEMENT_LEVEL
+
+SBAC_Data_LONG <- SGP:::getAchievementLevel(SBAC_Data_LONG, "SBAC")
 
 ###   Save LONG Data
 setkeyv(SBAC_Data_LONG, SGP:::getKey(SBAC_Data_LONG))
