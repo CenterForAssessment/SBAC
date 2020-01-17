@@ -42,12 +42,12 @@ SBAC_SGP <- abcSGP(
 			sgp.percentiles.baseline=FALSE,
 			sgp.projections.baseline=FALSE,
 			sgp.projections.lagged.baseline=FALSE,
-			simulate.sgps=FALSE,
+			calculate.simex=TRUE,
 			save.intermediate.results=FALSE,
 			sgp.config=SBAC_CONFIG,
 			sgp.target.scale.scores=TRUE,
 			sgPlot.demo.report=TRUE,
-			parallel.config=list(BACKEND="PARALLEL", WORKERS=list(TAUS=20, PERCENTILES=1, PROJECTIONS=10, LAGGED_PROJECTIONS=10, SGP_SCALE_SCORE_TARGETS=10, GA_PLOTS=1, SG_PLOTS=1)))
+			parallel.config=list(BACKEND="PARALLEL", WORKERS=list(SIMEX=10, TAUS=10, PERCENTILES=1, PROJECTIONS=10, LAGGED_PROJECTIONS=10, SGP_SCALE_SCORE_TARGETS=10, GA_PLOTS=1, SG_PLOTS=1)))
 
 
 ### Save results

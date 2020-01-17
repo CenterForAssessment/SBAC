@@ -80,10 +80,14 @@ setkey(SBAC_Data_LONG, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID, SCALE_SCORE)
 setkey(SBAC_Data_LONG, VALID_CASE, CONTENT_AREA, YEAR, GRADE, ID)
 SBAC_Data_LONG[which(duplicated(SBAC_Data_LONG, by=key(SBAC_Data_LONG)))-1, VALID_CASE:="INVALID_CASE"]
 
-
 # Add ACHIEVEMENT_LEVEL
 
 SBAC_Data_LONG <- SGP:::getAchievementLevel(SBAC_Data_LONG, "SBAC")
+
+# Add in SCALE_SCORE_CSEM (for testing purposes)
+
+SBAC_Data_LONG[!is,na(SGP), SCALE_SCORE_CSEM:=25]
+
 
 ###   Save LONG Data
 setkeyv(SBAC_Data_LONG, SGP:::getKey(SBAC_Data_LONG))
